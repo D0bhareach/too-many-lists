@@ -18,6 +18,11 @@ types". Rust calls sum types `enum`s! If you're coming from a C-like language,
 this is exactly the enum you know and love, but in overdrive. So let's
 transcribe this functional definition into Rust!
 
+<details><summary>Linked List</summary>
+Heap allocated data structure, pointer to the first node is stored in memory, and every node has pointer to next as part of its implementation, so each node is at least some value and pointer to next. List is not contignius data structures nodes are scattered across memory, therefor accessing a node in list is slover than simply moving pointer in array.
+</details>
+
+
 For now we'll avoid generics to keep things simple. We'll only support
 storing signed 32-bit integers:
 
@@ -101,7 +106,7 @@ fn main() {
 >
 > `Cons(T, List<T>),`
 >
-> It wouldn't work. This is because the size of a List depends on how many elements are in the list, and so we don't know how much memory to allocate for a Cons. By introducing a Box, which has a defined size, we know how big Cons needs to be.
+> It wouldn't work. This is because the size of a List depends on how many elements are in the list, and so we don't know how much memory to allocate for a Cons. By introducing a Box, which has a defined size, we know how big Cons needs to be. This comes from the fact that stack frame for the function can only save values whose size is now at compile time. Since size List is dynamically growing structure it's size is not known. To work around this limitation if List is placed bihind some pointer (whose size is perfectly known). For reference have a look at [Visualizing memory layout of Rust's data types](https://www.youtube.com/watch?v=rDoqT-a6UFg&t=1942s)
 
 Wow, uh. That is perhaps the most relevant and helpful documentation I have ever seen. Literally the first thing in the documentation is *exactly what we're trying to write, why it didn't work, and how to fix it*.
 
@@ -247,7 +252,8 @@ enum Foo {
 the null pointer optimization kicks in, which *eliminates the space needed for
 the tag*. If the variant is A, the whole enum is set to all `0`'s. Otherwise,
 the variant is B. This works because B can never be all `0`'s, since it contains
-a non-zero pointer. Slick!
+a non-zero pointer. Slick!   
+More about enum memory layout in [Visualizing memory layout of Rust's data types](https://www.youtube.com/watch?v=rDoqT-a6UFg&t=1942s) video.
 
 Can you think of other enums and types that could do this kind of optimization?
 There's actually a lot! This is why Rust leaves enum layout totally unspecified.
@@ -316,15 +322,19 @@ we favour keeping implementation details private. Let's make `List` a struct, so
 that we can hide the implementation details:
 
 ```rust ,ignore
+// entry-point link structure, first element.
 pub struct List {
     head: Link,
 }
 
+// enum that can be noting, or pointer (since Box is a pointer) to other node.
+// So with small ammount of inderection it mimic linked list created with C lang.
 enum Link {
     Empty,
     More(Box<Node>),
 }
 
+// node holds some value and link to other Node.
 struct Node {
     elem: i32,
     next: Link,
