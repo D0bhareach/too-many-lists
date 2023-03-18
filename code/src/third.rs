@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::rc::Rc;
 
 // in this module an immutable thread not save stack will be implimented

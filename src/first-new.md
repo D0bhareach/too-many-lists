@@ -1,4 +1,5 @@
 # New
+<strong>Noting new for me here. Can skip.</strong>    
 
 To associate actual code with a type, we use `impl` blocks:
 

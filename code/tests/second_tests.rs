@@ -1,4 +1,4 @@
-use second;
+use code::second;
 
 #[test]
 fn basics() {
