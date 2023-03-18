@@ -1,0 +1,34 @@
+use third::List;
+
+// test prepend, head, tail functionality
+#[test]
+fn test_basics() {
+    let list = List::new();
+    assert_eq!(list.head(), None);
+
+    let list = list.prepend(1).prepend(2).prepend(3);
+    assert_eq!(list.head(), Some(&3));
+
+    let list = list.tail();
+    assert_eq!(list.head(), Some(&2));
+
+    let list = list.tail();
+    assert_eq!(list.head(), Some(&1));
+
+    let list = list.tail();
+    assert_eq!(list.head(), None);
+
+    // Make sure empty tail works
+    let list = list.tail();
+    assert_eq!(list.head(), None);
+}
+
+#[test]
+fn test_iter() {
+    let list = List::new().prepend(1).prepend(2).prepend(3);
+
+    let mut iter = list.iter();
+    assert_eq!(iter.next(), Some(&3));
+    assert_eq!(iter.next(), Some(&2));
+    assert_eq!(iter.next(), Some(&1));
+}
