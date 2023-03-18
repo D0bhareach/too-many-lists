@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 /// Bad safe Deque
 use std::cell::{Ref, RefCell, RefMut};
 use std::rc::Rc;

@@ -1,4 +1,4 @@
-use first;
+use code::first;
 
 #[test]
 fn test_basics() {
@@ -13,6 +13,7 @@ fn test_basics() {
     list.push(2);
     // println!("{:?}", list);
     list.push(3);
+    list = dbg!(list);
 
     // Check normal removal
     assert_eq!(list.pop(), Some(3));

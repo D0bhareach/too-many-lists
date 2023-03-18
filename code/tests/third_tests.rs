@@ -1,4 +1,4 @@
-use third::List;
+use code::third::List;
 
 // test prepend, head, tail functionality
 #[test]

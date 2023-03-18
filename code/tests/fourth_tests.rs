@@ -1,4 +1,4 @@
-use fourth::List;
+use code::fourth::List;
 
 #[test]
 fn test_basics_fourth() {

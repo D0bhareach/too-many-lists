@@ -1,4 +1,4 @@
-use sixth::LinkedList;
+use code::sixth::LinkedList;
 
 #[test]
 fn test_sixth_front() {

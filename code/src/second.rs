@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 #[derive(Debug)]
 pub struct List<T> {
     // List is simple wrapper around type Option.
